@@ -99,11 +99,11 @@ def export_weather_parameters(weather_df: pd.DataFrame, location_config: dict,
     
     # 5. Export forecast model parameters
     from config import PERFORMANCE_RATIO_BY_WEATHER, PERFORMANCE_RATIO_DEFAULT, TEMPERATURE_COEFFICIENT
-    
+
     model_params = {
         "pv_system": {
-            "tilt_angle_degrees": 30,
-            "azimuth_degrees": 180,
+            "tilt_angle_degrees": location_config.get('panels', {}).get('tilt', 20),
+            "azimuth_degrees": location_config.get('panels', {}).get('azimuth', 180),
             "performance_ratio_default": PERFORMANCE_RATIO_DEFAULT,
             "performance_ratio_by_weather": PERFORMANCE_RATIO_BY_WEATHER,
             "soiling_factor": "Included in performance ratio",
