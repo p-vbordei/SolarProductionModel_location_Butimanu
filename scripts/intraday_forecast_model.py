@@ -74,9 +74,9 @@ class IntradaySolarForecastModel:
         self.temp_coefficient = TEMPERATURE_COEFFICIENT
         self.soiling_factor = 0.98  # 2% soiling losses
         
-        # PV system configuration
-        self.tilt_angle = 25  # degrees - CEF Tomnatic installation angle
-        self.azimuth_angle = 180  # degrees - south facing
+        # PV system configuration - read from location config
+        self.tilt_angle = location_config.get('panels', {}).get('tilt', 20)  # degrees - panel tilt angle
+        self.azimuth_angle = location_config.get('panels', {}).get('azimuth', 180)  # degrees - panel orientation
         
         # Intraday-specific parameters
         self.cloud_response_factor = 0.8  # How quickly output responds to cloud changes

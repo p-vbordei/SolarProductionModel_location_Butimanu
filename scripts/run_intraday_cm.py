@@ -22,8 +22,8 @@ logging.basicConfig(
 def main():
     """Run single intraday forecast for CM location"""
     try:
-        print("🚀 Starting CEF Tomnatic Intraday Solar Forecast")
-        print("📍 Location: 45.9926°N, 20.6813°E (2425 kW AC limit)")
+        print("🚀 Starting CEF Butimanu Intraday Solar Forecast")
+        print("📍 Location: 44.6832°N, 25.9071°E (10.8 MW AC capacity)")
         print("⏱️  Resolution: 15 minutes, Horizon: 7 days")
         print("="*60)
         

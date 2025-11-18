@@ -92,7 +92,7 @@ def export_forecast_to_excel(output_path=None):
         ws_summary = wb.create_sheet("Summary", 0)
         
         # Add header
-        ws_summary['A1'] = "CEF Tomnatic Solar Forecast Report"
+        ws_summary['A1'] = "CEF Butimanu Solar Forecast Report"
         ws_summary['A1'].font = Font(size=16, bold=True)
         ws_summary['A3'] = f"Generated: {datetime.now(pytz.timezone('Europe/Berlin')).strftime('%Y-%m-%d %H:%M:%S CET')}"
 
@@ -100,13 +100,13 @@ def export_forecast_to_excel(output_path=None):
         ws_summary['A5'] = "Location Information"
         ws_summary['A5'].font = Font(bold=True)
         ws_summary['A6'] = "Plant Name:"
-        ws_summary['B6'] = "CEF Tomnatic"
+        ws_summary['B6'] = "CEF Butimanu"
         ws_summary['A7'] = "DC Capacity:"
-        ws_summary['B7'] = "2919 kW (2.919 MW) - Risen 695W panels"
+        ws_summary['B7'] = "12806 kW (12.806 MW) - LONGi 580W panels"
         ws_summary['A8'] = "AC Capacity:"
-        ws_summary['B8'] = "2500 kW (limited to 2425 kW)"
+        ws_summary['B8'] = "10800 kW (10.8 MW)"
         ws_summary['A9'] = "Location:"
-        ws_summary['B9'] = "45.9926°N, 20.6813°E (Tomnatic, Timiș)"
+        ws_summary['B9'] = "44.6832°N, 25.9071°E (Butimanu, Dâmbovița)"
         ws_summary['A10'] = "Timezone:"
         ws_summary['B10'] = "CET (Central European Time)"
         
@@ -241,7 +241,7 @@ def export_forecast_to_excel(output_path=None):
         # Generate output filename
         if output_path is None:
             timestamp = datetime.now(pytz.timezone('Europe/Berlin')).strftime('%Y%m%d_%H%M%S')
-            output_path = os.path.join(data_dir, f'cef_tomnatic_forecast_{timestamp}.xlsx')
+            output_path = os.path.join(data_dir, f'cef_butimanu_forecast_{timestamp}.xlsx')
 
         # Save workbook
         wb.save(output_path)
@@ -249,7 +249,7 @@ def export_forecast_to_excel(output_path=None):
 
         # Display summary
         print("\n📊 Forecast Summary:")
-        print(f"   Location: CEF Tomnatic (2.919 MW DC / 2.425 MW AC limit)")
+        print(f"   Location: CEF Butimanu (12.806 MW DC / 10.8 MW AC)")
         print(f"   Period: 7 days ({len(df_1hour)} hours)")
         print(f"   Peak Power: {df_1hour['power_kw'].max():.1f} kW")
         print(f"   Total Energy: {df_1hour['energy_kwh'].sum():.1f} kWh")

@@ -146,7 +146,7 @@ class ForecastEmailService:
         """Create summary statistics for the report"""
         return {
             'Report Generated': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'Location': 'CEF Tomnatic (2.919 MW DC / 2.425 MW AC)',
+            'Location': 'CEF Butimanu (12.806 MW DC / 10.8 MW AC)',
             'Forecast Period Start': str(df_15min.index[0]),
             'Forecast Period End': str(df_15min.index[-1]),
             'Total Energy 15min (kWh)': round(df_15min['energy_kwh'].sum(), 2),
@@ -190,7 +190,7 @@ class ForecastEmailService:
         
         # Find the latest Excel file
         import glob
-        excel_files = glob.glob(os.path.join(self.data_dir, 'cef_tomnatic_forecast_*.xlsx'))
+        excel_files = glob.glob(os.path.join(self.data_dir, 'cef_butimanu_forecast_*.xlsx'))
         if not excel_files:
             logger.error("No Excel file found after generation")
             return False
@@ -216,7 +216,7 @@ class ForecastEmailService:
             
             # Attach Excel file with date in filename
             date_str = datetime.now().strftime('%Y%m%d')
-            attachment_name = f'{date_str}_CEF_Tomnatic_Solar_FC.xlsx'
+            attachment_name = f'{date_str}_CEF_Butimanu_Solar_FC.xlsx'
             self.attach_file(msg, excel_path, attachment_name)
             
             # Optionally attach CSV files
@@ -293,7 +293,7 @@ class ForecastEmailService:
         <body style="font-family: Arial, sans-serif; color: #333;">
             <h2 style="color: #4472C4;">Solar Production Forecast Report</h2>
 
-            <h3>Location: CEF Tomnatic - Timiș (2.425 MW AC)</h3>
+            <h3>Location: CEF Butimanu - Dâmbovița (10.8 MW AC)</h3>
             
             <div style="background-color: #f0f4f8; padding: 15px; border-radius: 5px; margin: 20px 0;">
                 <h4 style="color: #4472C4; margin-top: 0;">Forecast Summary</h4>
@@ -330,7 +330,7 @@ class ForecastEmailService:
                     </tr>
                     <tr>
                         <td style="padding: 5px;"><strong>Capacity Factor:</strong></td>
-                        <td style="padding: 5px;">{(next_24h_energy / (2425 * 24) * 100):.1f}%</td>
+                        <td style="padding: 5px;">{(next_24h_energy / (10800 * 24) * 100):.1f}%</td>
                     </tr>
                 </table>
             </div>
@@ -356,7 +356,7 @@ class ForecastEmailService:
             <p style="margin-top: 30px;">
                 <strong>Attached Files:</strong>
                 <ul>
-                    <li><strong>{datetime.now().strftime('%Y%m%d')}_CEF_Tomnatic_Solar_FC.xlsx</strong> - Excel workbook with both forecast resolutions</li>
+                    <li><strong>{datetime.now().strftime('%Y%m%d')}_CEF_Butimanu_Solar_FC.xlsx</strong> - Excel workbook with both forecast resolutions</li>
                 </ul>
             </p>
             

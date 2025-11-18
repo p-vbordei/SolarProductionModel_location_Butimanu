@@ -112,30 +112,30 @@ LOCATIONS = {
         'type': 'rooftop'
     },
     'cm_forecast': {
-        'name': 'CEF Tomnatic',
-        'latitude': 45.9926,  # 45°59'33.4"N
-        'longitude': 20.6813,  # 20°40'52.7"E
+        'name': 'CEF Butimanu',
+        'latitude': 44.6831723314943,  # 44°40'59.4"N
+        'longitude': 25.90705368931444,  # 25°54'25.4"E
         'country': 'RO',
         'timezone': 'Europe/Berlin',
-        'estimated_capacity_mw': 2.425,  # 2425 kW AC capacity (limited/working capacity)
-        'dc_capacity_mw': 2.919,  # 2919 kW DC from panels
-        'ac_capacity_mw': 2.5,  # 2500 kW AC nameplate (limited to 2425 kW)
-        'ac_limit_mw': 2.425,  # 2425 kW actual AC limit
+        'estimated_capacity_mw': 10.8,  # 10.8 MW AC capacity (limited/working capacity)
+        'dc_capacity_mw': 12.806,  # 12.806 MW DC from panels
+        'ac_capacity_mw': 10.8,  # 10.8 MW AC nameplate (limited to 10.8 MW)
+        'ac_limit_mw': 10.8,  # 10.8 MW actual AC limit
         'type': 'intraday',
         'panels': {
-            'model': 'Risen Energy RSM132-8-695BHDG',
-            'power_per_panel': 695,  # Watts
-            'count': 4200,
-            'total_dc_power': 2919000,  # 4200 * 695W = 2.919 MW DC
-            'tilt': 25,  # degrees
+            'model': 'LONGi LR5-72HIBD580M',
+            'power_per_panel': 580,  # Watts
+            'count': 22080,
+            'total_dc_power': 12806400,  # 22,080 * 580W = 12.806 MW DC
+            'tilt': 20,  # degrees
             'azimuth': 180  # South-facing (0=North, 90=East, 180=South, 270=West)
         },
         'inverters': {
-            'model': 'Huawei SUN2000-100KTL-M2',
-            'power_per_inverter': 100000,  # 100 kW in Watts
-            'count': 25,
-            'total_ac_power': 2500000,  # 25 * 100 kW = 2.5 MW AC (nameplate)
-            'limited_ac_power': 2425000  # Limited to 2.425 MW AC
+            'model': 'Huawei SUN2000-215KTL-H1',
+            'power_per_inverter': 200000,  # 200 kW in Watts
+            'count': 54,
+            'total_ac_power': 10800000,  # 54 * 200 kW = 10.8 MW AC
+            'limited_ac_power': 10800000  # Limited to 10.8 MW AC
         }
     }
 }

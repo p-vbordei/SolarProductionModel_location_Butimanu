@@ -1,4 +1,4 @@
-name: Daily Solar Forecast Tomnatic
+name: Daily Solar Forecast Butimanu
 
 on:
   schedule:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch: # Allow manual triggering for testing
 
 jobs:
-  solar-forecast-tomnatic:
+  solar-forecast-butimanu:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -45,9 +45,9 @@ jobs:
           path: |
             ~/.cache/uv
             .venv
-          key: ${{ runner.os }}-uv-tomnatic-${{ hashFiles('**/pyproject.toml', '**/requirements.txt') }}
+          key: ${{ runner.os }}-uv-butimanu-${{ hashFiles('**/pyproject.toml', '**/requirements.txt') }}
           restore-keys: |
-            ${{ runner.os }}-uv-tomnatic-
+            ${{ runner.os }}-uv-butimanu-
 
       - name: Create email configuration
         run: |
@@ -56,9 +56,9 @@ jobs:
 
       - name: Run forecast workflow
         run: |
-          echo "🚀 Starting Solar Forecast Workflow - CEF Tomnatic"
+          echo "🚀 Starting Solar Forecast Workflow - CEF Butimanu"
           echo "========================================"
-          echo "Location: CEF Tomnatic - Timiș (2.425 MW AC)"
+          echo "Location: CEF Butimanu - Dâmbovița (10.8 MW AC)"
           echo "Time: $(date)"
           echo "Bucharest Time: $(TZ='Europe/Bucharest' date)"
           echo "========================================"
@@ -70,11 +70,11 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: forecast-tomnatic-${{ github.run_number }}-${{ github.run_attempt }}
+          name: forecast-butimanu-${{ github.run_number }}-${{ github.run_attempt }}
           path: |
             data_output/intraday/*latest*.csv
             data_output/intraday/*latest*.json
-            data_output/intraday/cef_tomnatic_forecast_*.xlsx
+            data_output/intraday/cef_butimanu_forecast_*.xlsx
             data_output/intraday/cm_forecast_system_state.json
           retention-days: 30
           if-no-files-found: warn
@@ -83,7 +83,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: error-logs-tomnatic-${{ github.run_number }}-${{ github.run_attempt }}
+          name: error-logs-butimanu-${{ github.run_number }}-${{ github.run_attempt }}
           path: |
             logs/
             data_output/
@@ -94,14 +94,14 @@ jobs:
 
       - name: Summary
         run: |
-          echo "## 📊 Forecast Execution Summary - CEF Tomnatic" >> $GITHUB_STEP_SUMMARY
+          echo "## 📊 Forecast Execution Summary - CEF Butimanu" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Triggered by**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Execution time**: $(date)" >> $GITHUB_STEP_SUMMARY
           echo "- **Bucharest time**: $(TZ='Europe/Bucharest' date)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Location**: CEF Tomnatic (2.425 MW AC)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Coordinates**: 45.9926°N, 20.6813°E (Tomnatic, Timiș)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Location**: CEF Butimanu (10.8 MW AC)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Coordinates**: 44.6832°N, 25.9071°E (Butimanu, Dâmbovița)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           if [[ -f "data_output/intraday/cm_forecast_summary_latest.json" ]]; then

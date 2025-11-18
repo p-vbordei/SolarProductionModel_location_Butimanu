@@ -1,12 +1,13 @@
-# Solar Forecast Email System (Minimal)
+# Solar Forecast Email System - CEF Butimanu
 
-This is a minimal branch containing only the code required for the solar forecast email workflow.
+Solar production forecasting system for CEF Butimanu solar park.
 
 ## Features
 
-- Solar production forecasting for SC Maghebo SRL (870 kW)
+- Solar production forecasting for CEF Butimanu (12.806 MW DC / 10.8 MW AC)
 - Excel report generation with 15-minute and hourly data
 - Automated email delivery via Zoho Mail
+- 7-day rolling forecast with probabilistic outputs (P10, P25, P50, P75, P90)
 
 ## Quick Start
 
@@ -58,13 +59,22 @@ docker-compose logs -f solar-forecast-email
 
 ## Configuration
 
+### Solar Park Specifications
+
+- **Location**: Butimanu, Dâmbovița County, Romania
+- **Coordinates**: 44.6832°N, 25.9071°E
+- **DC Capacity**: 12.806 MW (22,080 × 580W LONGi panels)
+- **AC Capacity**: 10.8 MW (54 × 200kW Huawei inverters)
+- **Panel Tilt**: 20° South-facing
+
+### Email Setup
+
 1. Ensure `scripts/email_config_zoho_working.json` exists with valid Zoho credentials
-2. The system is configured for SC Maghebo SRL (47.5291042°N, 25.5794844°E, 870 kW)
 
 ## Output Files
 
 - **Forecasts**: `data_output/intraday/cm_forecast_*.csv`
-- **Excel Reports**: `data_output/intraday/maghebo_forecast_*.xlsx`
+- **Excel Reports**: `data_output/intraday/cef_butimanu_forecast_*.xlsx`
 - **System State**: `data_output/intraday/cm_forecast_system_state.json`
 
 ## Email Recipients

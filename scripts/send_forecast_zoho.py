@@ -39,7 +39,7 @@ def main():
     
     success = service.send_forecast_email(
         recipient_emails=recipients,
-        subject='🌞 Solar Forecast Report - CEF Tomnatic (2.425 MW)',
+        subject='🌞 Solar Forecast Report - CEF Butimanu (10.8 MW)',
         attach_csv=False
     )
     
