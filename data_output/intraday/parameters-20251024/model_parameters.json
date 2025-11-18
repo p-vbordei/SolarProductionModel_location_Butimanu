@@ -1,0 +1,28 @@
+{
+  "pv_system": {
+    "tilt_angle_degrees": 30,
+    "azimuth_degrees": 180,
+    "performance_ratio_default": 0.92,
+    "performance_ratio_by_weather": {
+      "clear_sky": 0.97,
+      "partly_cloudy": 0.92,
+      "cloudy": 0.85,
+      "overcast": 0.75,
+      "default": 0.92
+    },
+    "soiling_factor": "Included in performance ratio",
+    "temperature_coefficient": -0.004,
+    "inverter_efficiency": 0.99,
+    "dc_clipping": "Capped at nameplate capacity"
+  },
+  "atmospheric": {
+    "atmospheric_transmission": 0.78,
+    "calibration_enabled": true,
+    "albedo": 0.25
+  },
+  "calibration": {
+    "peak_hour_factors": "1.08-1.10",
+    "morning_factors": "1.05-1.12",
+    "note": "Reduced to prevent overforecasting"
+  }
+}

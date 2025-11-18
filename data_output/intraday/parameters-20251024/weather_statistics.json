@@ -1,0 +1,25 @@
+{
+  "data_period": {
+    "start": "2025-10-24 22:00:00+00:00",
+    "end": "2025-10-30 23:45:00+00:00",
+    "hours": 584,
+    "resolution": "15-minute interpolated from hourly"
+  },
+  "ghi_statistics": {
+    "max": 509.0,
+    "mean": 94.73287671232876,
+    "min": 0.0,
+    "daylight_mean": 212.7846153846154,
+    "peak_hours_mean": 337.2450980392157
+  },
+  "temperature_statistics": {
+    "max": 18.6,
+    "mean": 10.275599315068494,
+    "min": 5.3
+  },
+  "cloud_cover_statistics": {
+    "mean": 51.14383561643836,
+    "clear_hours": 220,
+    "cloudy_hours": 232
+  }
+}

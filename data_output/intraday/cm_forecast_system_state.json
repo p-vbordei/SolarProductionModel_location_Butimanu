@@ -1,0 +1,57 @@
+{
+  "system_status": {
+    "system_status": "operational",
+    "last_update": "2025-10-24T14:20:47.936361+00:00",
+    "location": "CEF Tomnatic",
+    "model_type": "ml_physics",
+    "forecast_available": true,
+    "forecast_history_count": 1,
+    "latest_forecast_time": null
+  },
+  "latest_forecast_summary": {
+    "location": "cm_forecast",
+    "report_timestamp": "2025-10-24T14:20:47.898846+00:00",
+    "forecast_period": {
+      "start": "2025-10-24T22:00:00+00:00",
+      "end": "2025-10-30T23:00:00+00:00",
+      "duration_hours": 146,
+      "duration_days": 6.083333333333333
+    },
+    "capacity_analysis": {
+      "capacity_kw": 2425.0,
+      "peak_production_kw": 2206.911,
+      "average_production_kw": 352.55,
+      "capacity_factor": 0.145
+    },
+    "energy_analysis": {
+      "total_energy_kwh": 51472.2,
+      "daily_average_kwh": 8461.2,
+      "peak_day_kwh": 12261.9,
+      "energy_p10_kwh": 37161.5,
+      "energy_p90_kwh": 65019.0
+    },
+    "uncertainty_analysis": {
+      "average_uncertainty_kw": 190.805,
+      "relative_uncertainty_pct": 54.1,
+      "max_uncertainty_kw": 1130.832,
+      "uncertainty_range_kwh": 27857.5
+    },
+    "operational_insights": {
+      "producing_hours": "68",
+      "non_producing_hours": "78",
+      "peak_production_time": "2025-10-27T10:00:00+00:00",
+      "generation_efficiency": 0.466,
+      "forecast_quality": "low"
+    },
+    "model_type": "ml_physics"
+  },
+  "forecast_history_summary": {
+    "20251024_1420": {
+      "model": "ml_physics",
+      "timestamp": "2025-10-24 14:20:47.936350+00:00",
+      "peak_kw": 2206.911,
+      "total_kwh": 51472.2
+    }
+  },
+  "export_timestamp": "2025-10-24T14:20:47.936481+00:00"
+}

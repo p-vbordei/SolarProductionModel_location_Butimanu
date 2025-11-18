@@ -1,0 +1,112 @@
+name: Daily Solar Forecast Tomnatic
+
+on:
+  schedule:
+    # Run at 09:00 Bucharest time
+    - cron: "0 8 * * *" # 09:00 EEST (UTC+3) during summer
+    # - cron: '0 7 * * *'   # 09:00 EET (UTC+2) during winter - DISABLED until October
+
+  workflow_dispatch: # Allow manual triggering for testing
+
+jobs:
+  solar-forecast-tomnatic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # No need to specify ref since main is the default branch
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache uv installation
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/bin
+          key: ${{ runner.os }}-uv-installation
+
+      - name: Install uv
+        run: |
+          if ! command -v uv &> /dev/null; then
+            echo "Installing uv..."
+            curl -LsSf https://astral.sh/uv/install.sh | sh
+          else
+            echo "uv already installed"
+          fi
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            .venv
+          key: ${{ runner.os }}-uv-tomnatic-${{ hashFiles('**/pyproject.toml', '**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-tomnatic-
+
+      - name: Create email configuration
+        run: |
+          # Email configuration is now hardcoded in send_forecast_zoho.py
+          echo "Email configuration hardcoded in script"
+
+      - name: Run forecast workflow
+        run: |
+          echo "🚀 Starting Solar Forecast Workflow - CEF Tomnatic"
+          echo "========================================"
+          echo "Location: CEF Tomnatic - Timiș (2.425 MW AC)"
+          echo "Time: $(date)"
+          echo "Bucharest Time: $(TZ='Europe/Bucharest' date)"
+          echo "========================================"
+
+          # Run the combined workflow script
+          uv run python scripts/run_forecast_and_email.py
+
+      - name: Upload forecast artifacts
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forecast-tomnatic-${{ github.run_number }}-${{ github.run_attempt }}
+          path: |
+            data_output/intraday/*latest*.csv
+            data_output/intraday/*latest*.json
+            data_output/intraday/cef_tomnatic_forecast_*.xlsx
+            data_output/intraday/cm_forecast_system_state.json
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload detailed logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: error-logs-tomnatic-${{ github.run_number }}-${{ github.run_attempt }}
+          path: |
+            logs/
+            data_output/
+          retention-days: 7
+          if-no-files-found: ignore
+
+      # No cleanup needed - configuration is hardcoded
+
+      - name: Summary
+        run: |
+          echo "## 📊 Forecast Execution Summary - CEF Tomnatic" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Execution time**: $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Bucharest time**: $(TZ='Europe/Bucharest' date)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Location**: CEF Tomnatic (2.425 MW AC)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Coordinates**: 45.9926°N, 20.6813°E (Tomnatic, Timiș)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [[ -f "data_output/intraday/cm_forecast_summary_latest.json" ]]; then
+            echo "### 🌞 Forecast Results" >> $GITHUB_STEP_SUMMARY
+            echo '```json' >> $GITHUB_STEP_SUMMARY
+            head -20 data_output/intraday/cm_forecast_summary_latest.json >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
