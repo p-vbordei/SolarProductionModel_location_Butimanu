@@ -81,6 +81,12 @@ def export_forecast_to_excel(output_path=None):
             df_1hour = df_1hour.rename(columns={'Unnamed: 0': 'timestamp'})
         elif df_1hour.columns[0] == '' or pd.isna(df_1hour.columns[0]):
             df_1hour = df_1hour.rename(columns={df_1hour.columns[0]: 'timestamp'})
+
+        # Parse timestamps for both dataframes
+        if 'timestamp' in df_15min.columns:
+            df_15min['timestamp'] = pd.to_datetime(df_15min['timestamp'], utc=True, errors='coerce')
+        if 'timestamp' in df_1hour.columns:
+            df_1hour['timestamp'] = pd.to_datetime(df_1hour['timestamp'], utc=True, errors='coerce')
         
         # Create workbook
         wb = Workbook()
@@ -132,6 +138,13 @@ def export_forecast_to_excel(output_path=None):
         # Add hourly sheet
         ws_hourly = wb.create_sheet("Hourly Forecast", 1)
         
+        # Remove timezone information from datetime columns for Excel compatibility
+        for col in df_1hour.columns:
+            if pd.api.types.is_datetime64tz_dtype(df_1hour[col]):
+                df_1hour[col] = df_1hour[col].dt.tz_localize(None)
+        if pd.api.types.is_datetime64tz_dtype(df_1hour.index):
+            df_1hour.index = df_1hour.index.tz_localize(None)
+        
         # Add header row with formatting
         headers = list(df_1hour.columns)
         ws_hourly.append(headers)
@@ -166,10 +179,8 @@ def export_forecast_to_excel(output_path=None):
         # Prepare 15-minute data with time breakdown columns (like hourly)
         df_15min_ordered = df_15min.copy()
 
-        # Parse timestamp if it's a string
-        if 'timestamp' in df_15min_ordered.columns:
-            if df_15min_ordered['timestamp'].dtype == 'object':
-                df_15min_ordered['timestamp'] = pd.to_datetime(df_15min_ordered['timestamp'])
+        if df_15min_ordered['timestamp'].isna().any():
+            raise ValueError("Invalid timestamps detected after parsing")
 
         # Add time breakdown columns for 15-minute intervals
         df_15min_ordered['YEAR'] = df_15min_ordered['timestamp'].dt.year
@@ -209,6 +220,11 @@ def export_forecast_to_excel(output_path=None):
         excluded_columns = ['forecast_timestamp', 'resolution_minutes', 'power_kw', 'timestamp_end', 'location']
         columns_15min = [col for col in columns_15min if col in df_15min_ordered.columns and col not in excluded_columns]
         df_15min_ordered = df_15min_ordered[columns_15min]
+        
+        # Remove timezone information from datetime columns for Excel compatibility
+        for col in df_15min_ordered.columns:
+            if pd.api.types.is_datetime64tz_dtype(df_15min_ordered[col]):
+                df_15min_ordered[col] = df_15min_ordered[col].dt.tz_localize(None)
         
         # Add headers
         headers_15min = list(df_15min_ordered.columns)
